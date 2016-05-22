@@ -9,8 +9,7 @@ object SomeActions extends App {
     .setMaster("local[*]")
   val sc = new SparkContext(sparkConf)
 
-  val evenNumbers = sc.parallelize(1 to 1000)
-    .filter(_ % 2 == 0)
+  val evenNumbers = sc.parallelize(1 to 1000).filter(_ % 2 == 0)
 
   println("sum: " + evenNumbers.reduce(_ + _))
   println("first even: " + evenNumbers.first)
