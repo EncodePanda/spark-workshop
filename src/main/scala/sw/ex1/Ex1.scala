@@ -5,7 +5,7 @@ import org.apache.spark._
 object FullScan extends App {
 
   val sparkConf = new SparkConf()
-    .setAppName("word-count-1")
+    .setAppName(this.getClass.getName)
     .setMaster("local[*]")
   val sc = new SparkContext(sparkConf)
 
@@ -27,7 +27,7 @@ object FullScan extends App {
 object OnlyJuliet extends App {
 
   val sparkConf = new SparkConf()
-    .setAppName("word-count-1")
+    .setAppName(this.getClass.getName)
     .setMaster("local[*]")
   val sc = new SparkContext(sparkConf)
 
