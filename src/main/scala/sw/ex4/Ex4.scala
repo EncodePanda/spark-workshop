@@ -2,50 +2,64 @@ package sw.ex4
 
 import org.apache.spark._
 
-object WordCount1 extends App {
+object StagesStagesA extends App {
 
-  val sparkConf = new SparkConf()
-    .setAppName("word-count-1")
-    .setMaster("spark://localhost:7077")
-
-  val sc = new SparkContext(sparkConf)
-
-
-  val wc = sc.textFile("src/main/resources/all-shakespeare.txt")
-    .flatMap(_.split("""\W+"""))
-    .groupBy(identity)
-    .mapValues(w => w.size)
-    .take(10)
-    .foreach(println)
-
-  sc.stop()
-
-}
-
-case class User(name: String)
-
-object SerializationIssues extends App {
   val sparkConf = new SparkConf()
     .setAppName(this.getClass.getName)
-    .setMaster("spark://localhost:7077")
+    .setMaster("local[*]")
+    .set("spark.eventLog.enabled", "true")
+    .set("spark.executor.memory", "500m")
+
   val sc = new SparkContext(sparkConf)
 
+  val all = sc.textFile("src/main/resources/all-shakespeare.txt")
+  
+  sc.stop()
+}
 
-  val five = sc
-    .parallelize(List("john", "mike", "kate", "anna"))
+object StagesStagesB extends App {
 
-    .take(5)
-    .foreach(println)
+  val sparkConf = new SparkConf()
+    .setAppName(this.getClass.getName)
+    .setMaster("local[*]")
+    .set("spark.eventLog.enabled", "true")
+    .set("spark.executor.memory", "500m")
+
+  val sc = new SparkContext(sparkConf)
+
+  val weirdo = sc.textFile("src/main/resources/all-shakespeare.txt")
+    .map(_.toUpperCase())
+    .groupBy(_.size)
+    .mapValues(_.size)
 
   sc.stop()
 }
 
-class Simple {
+object StagesStagesC extends App {
 
-  def iTakeLambda(lambda: Int => String): String = {
-    // val lambda: Int => String = a => a.toString
-    lambda(10)
-  }
+  val sparkConf = new SparkConf()
+    .setAppName(this.getClass.getName)
+    .setMaster("local[*]")
+    .set("spark.eventLog.enabled", "true")
+    .set("spark.executor.memory", "500m")
 
-  iTakeLambda(a => a.toString())
+  val sc = new SparkContext(sparkConf)
+
+  val priors = sc.parallelize(List(
+    ('a', 100),
+    ('b', 200)
+  ))
+
+  val abs = sc.textFile("src/main/resources/all-shakespeare.txt")
+    .filter(line => line.trim != "")
+    .map(_.toLowerCase())
+    .groupBy(_.charAt(0))
+    .filter {
+      case (c, lines) => c == 'a' || c == 'b'
+    }
+
+  val theFinal = abs.join(priors)
+
+  sc.stop()
+
 }
