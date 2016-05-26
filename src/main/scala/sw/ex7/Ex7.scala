@@ -15,6 +15,7 @@ object Names extends App {
   val partitioner = new HashPartitioner(16)
 
   val wc = sc.textFile("src/main/resources/all-shakespeare.txt")
+    .map(_.toLowerCase())
     .flatMap(_.split("""\W+"""))
     .map(w => (w, 1))
     .reduceByKey(_ + _)
@@ -27,12 +28,12 @@ object Names extends App {
     .map(arr => (arr(0), arr(5)))
 
   val maleNames = names("src/main/resources/male-names.txt")
-  val maleFreq = wc.join(maleNames)
+  val maleFreq = maleNames.join(wc)
   maleFreq.collect().foreach(println)
 
 
   val femaleNames = names("src/main/resources/female-names.txt")
-  val femaleFreq = wc.join(femaleNames)
+  val femaleFreq = femaleNames.join(wc)
   femaleFreq.collect().foreach(println)
 
 
