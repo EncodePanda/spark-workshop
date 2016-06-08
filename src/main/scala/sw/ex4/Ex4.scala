@@ -13,7 +13,7 @@ object StagesStagesA extends App {
   val sc = new SparkContext(sparkConf)
 
   val all = sc.textFile("src/main/resources/all-shakespeare.txt")
-  
+
   sc.stop()
 }
 
@@ -22,8 +22,6 @@ object StagesStagesB extends App {
   val sparkConf = new SparkConf()
     .setAppName(this.getClass.getName)
     .setMaster("local[*]")
-    .set("spark.eventLog.enabled", "true")
-    .set("spark.executor.memory", "500m")
 
   val sc = new SparkContext(sparkConf)
 
