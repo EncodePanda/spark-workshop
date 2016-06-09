@@ -2,3 +2,4 @@
 target/
 /.ensime
 .ensime_cache/
+checkpoint/
