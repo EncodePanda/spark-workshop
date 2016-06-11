@@ -1,15 +1,16 @@
-package sw.ex5
+package sw.serialization
 
 import org.apache.spark._
 
 case class User(name: String)
 
 object SerializationIssues extends App {
+
   val sparkConf = new SparkConf()
     .setAppName(this.getClass.getName)
-    .setMaster("spark://localhost:7077")
+    .setMaster("spark://garden.local:7077")
   val sc = new SparkContext(sparkConf)
- 
+
   val five = sc
     .parallelize(List("john", "mike", "kate", "anna"))
     .take(5)
@@ -27,7 +28,4 @@ class Simple {
 
   iTakeLambda(a => a.toString())
 }
-
-
-
 
