@@ -1,4 +1,4 @@
-package sw.ex4
+package sw.pairrdds
 
 import org.apache.spark._
 
