@@ -75,7 +75,7 @@ object AggregationQuery extends App {
   val routes = Route(sqlCtx)
   routes.registerTempTable("routes")
 
-  sqlCtx.sql("select min(stops) as min_stops, max(stops) as max_stops, avg(stops) as avg_stops from routes").show()
+  sqlCtx.sql("select min(stops) as min_stops, max(stops) as max_stops from routes").show()
   // sqlCtx.sql("select stops from routes group by stops").show()
 
   sc.stop()
@@ -98,3 +98,4 @@ object GroupingQuery extends App {
 
   sc.stop()
 }
+
