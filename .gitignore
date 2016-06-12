@@ -8,3 +8,4 @@ src/main/scala/sw/streaming/WebPageLogsGenerator$delayedInit$body.class
 src/main/scala/sw/streaming/WebPageLogsGenerator.class
 /derby.log
 metastore_db/
+/src/main/resources/enron/enron.json
