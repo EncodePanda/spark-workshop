@@ -1,3 +1,4 @@
+"id","name","alias","iata", "icao","callsign","country","active"
 1,"Private flight",\N,"-","N/A","","","Y"
 2,"135 Airways",\N,"","GNL","GENERAL","United States","N"
 3,"1Time Airline",\N,"1T","RNX","NEXTIME","South Africa","Y"
