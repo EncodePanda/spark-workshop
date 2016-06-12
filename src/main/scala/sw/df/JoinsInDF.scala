@@ -1,7 +1,9 @@
-package sw.sql
+package sw.df
 
 import org.apache.spark._
 import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.expressions._
 import sw.air._
 
 object JoinQueries extends App {
@@ -14,14 +16,11 @@ object JoinQueries extends App {
   import sqlCtx._
 
   val airlines = Airline(sqlCtx)
-  airlines.registerTempTable("airlines")
-
   val routes = Route(sqlCtx)
-  routes.registerTempTable("routes")
 
-  sql("""select a.name, r.sourceAirport as 'source', r.destinationAirport as 'destination'
-         from airlines a join routes r 
-         on a.id = r.airlineId""").show()
+  airlines.join(routes, airlines("id") === routes("airlineId"))
+    .select(airlines("name"), routes("sourceAirport").as("source"), routes("destinationAirport").as("destination"))
+    .show()
 
   sc.stop()
 
