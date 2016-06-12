@@ -6,3 +6,5 @@ checkpoint/
 src/main/scala/sw/streaming/WebPageLogsGenerator$.class
 src/main/scala/sw/streaming/WebPageLogsGenerator$delayedInit$body.class
 src/main/scala/sw/streaming/WebPageLogsGenerator.class
+/derby.log
+metastore_db/
