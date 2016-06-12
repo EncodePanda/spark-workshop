@@ -34,7 +34,8 @@ object SimpleQueries extends App {
   airports.registerTempTable("airports")
 
   sqlCtx.sql("select * from airports").collect().foreach(println)
-  sqlCtx.sql("select count(*) from airports").collect().foreach(println)
+  // sqlCtx.sql("select count(*) from airports").collect().foreach(println)
+  // sqlCtx.sql("select count(distinct country) from airports").collect().foreach(println)
 
   sc.stop()
 }
@@ -81,7 +82,6 @@ object AggregationQuery extends App {
 
 }
 
-
 object GroupingQuery extends App {
 
   val sparkConf = new SparkConf()
@@ -97,5 +97,4 @@ object GroupingQuery extends App {
   sqlCtx.sql("select country, city, count(*) as no_airports from airports group by country, city having count(*) >= 2").show()
 
   sc.stop()
-
 }
