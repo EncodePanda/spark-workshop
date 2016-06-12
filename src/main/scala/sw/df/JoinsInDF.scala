@@ -18,8 +18,13 @@ object JoinQueries extends App {
   val airlines = Airline(sqlCtx)
   val routes = Route(sqlCtx)
 
-  airlines.join(routes, airlines("id") === routes("airlineId"))
-    .select(airlines("name"), routes("sourceAirport").as("source"), routes("destinationAirport").as("destination"))
+  airlines
+    .join(routes, airlines("id") === routes("airlineId"))
+    .select(
+      airlines("name"),
+      routes("sourceAirport").as("source"),
+      routes("destinationAirport").as("destination")
+    )
     .show()
 
   sc.stop()
