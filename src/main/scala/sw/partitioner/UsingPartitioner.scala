@@ -1,4 +1,4 @@
-package sw.ex6
+package sw.partitioner
 
 import org.apache.spark._
 
