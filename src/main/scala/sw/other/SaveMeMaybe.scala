@@ -1,4 +1,4 @@
-package sw.ex7
+package sw.other
 
 import org.apache.spark._
 
@@ -6,9 +6,10 @@ object Names extends App {
 
   val sparkConf = new SparkConf()
     .setAppName(this.getClass.getName)
-    .setMaster("spark://localhost:7077")
+    .setMaster("spark://garden.local:7077")
     .set("spark.eventLog.enabled", "true")
   val sc = new SparkContext(sparkConf)
+  sc.setCheckpointDir("chpt")
 
   sc.addJar("target/scala-2.10/fat.jar")
 
@@ -19,7 +20,10 @@ object Names extends App {
     .flatMap(_.split("""\W+"""))
     .map(w => (w, 1))
     .reduceByKey(_ + _)
-    .cache()
+
+  wc.setName("wc-rdd")
+
+  wc.checkpoint()
 
   def names(path: String) = sc
     .textFile(path)
@@ -28,14 +32,17 @@ object Names extends App {
     .map(arr => (arr(0), arr(5)))
 
   val maleNames = names("src/main/resources/male-names.txt")
+  maleNames.setName("maleNames-rdd")
   val maleFreq = maleNames.join(wc)
-  maleFreq.collect().foreach(println)
-
 
   val femaleNames = names("src/main/resources/female-names.txt")
+  femaleNames.setName("femaleNames-rdd")
   val femaleFreq = femaleNames.join(wc)
-  femaleFreq.collect().foreach(println)
 
+  val all = femaleFreq ++ maleFreq
+  all.setName("all-rdd")
+
+  all.collect().foreach(println)
 
   sc.stop()
 }
