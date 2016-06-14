@@ -51,7 +51,8 @@ object SimpleStreaming3 extends App {
   val ssc = new StreamingContext(sc, Seconds(10))
   val lines = ssc.socketTextStream("localhost", 9999)
 
-  lines.map(_.toUpperCase()).filter(!_.startsWith("W")).print()
+  val upperW = lines.map(_.toUpperCase()).filter(_.startsWith("W"))
+  upperW.print()
 
   ssc.start()
 
