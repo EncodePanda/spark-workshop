@@ -20,10 +20,7 @@ object Names extends App {
     .flatMap(_.split("""\W+"""))
     .map(w => (w, 1))
     .reduceByKey(_ + _)
-
-  wc.setName("wc-rdd")
-
-  wc.checkpoint()
+    .cache()
 
   def names(path: String) = sc
     .textFile(path)
