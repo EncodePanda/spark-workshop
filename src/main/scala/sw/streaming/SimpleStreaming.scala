@@ -51,10 +51,7 @@ object SimpleStreaming3 extends App {
   val ssc = new StreamingContext(sc, Seconds(10))
   val lines = ssc.socketTextStream("localhost", 9999)
 
-  lines.flatMap(_.split("""\W+"""))
-    .map(w => (w, 1))
-    .reduceByKey(_ + _)
-    .print()
+  lines.map(_.toUpperCase()).filter(!_.startsWith("W")).print()
 
   ssc.start()
 
