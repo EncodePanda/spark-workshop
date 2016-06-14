@@ -19,7 +19,7 @@ object Windows extends App {
   ssc.checkpoint("checkpoint")
 
   val lines = ssc.socketTextStream("localhost", 9999)
-  val windowed = lines.window(Seconds(interval * 3), Seconds(interval * 2))
+  val windowed = lines.window(Seconds(interval * 3))
 
   windowed.flatMap(_.split("""\W+"""))
     .map(w => (w, 1))
