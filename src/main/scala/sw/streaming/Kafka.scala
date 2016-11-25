@@ -1,5 +1,5 @@
 package sw.streaming
-
+/*
 import org.apache.spark._
 import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.streaming.StreamingContext._
@@ -7,9 +7,10 @@ import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.Duration
 import org.apache.spark.streaming.Seconds
 import org.apache.spark.streaming.kafka._
-
+ */
 object Kafka extends App {
 
+  /*
     val sparkConf = new SparkConf()
     .setAppName(this.getClass.getName)
     .setMaster("local[*]")
@@ -29,7 +30,7 @@ object Kafka extends App {
 
   ssc.awaitTermination()
   sc.stop()
-
+   */
 }
 
 
