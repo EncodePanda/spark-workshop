@@ -19,7 +19,7 @@ object JoinQueries extends App {
   val routes = Route(sqlCtx)
   routes.registerTempTable("routes")
 
-  sql("""select a.name, r.sourceAirport as 'source', r.destinationAirport as 'destination'
+  sql("""select a.name, r.sourceAirport as source, r.destinationAirport as destination
          from airlines a join routes r 
          on a.id = r.airlineId""").show()
 
